@@ -51,14 +51,14 @@ const ContentCard = styled.div`
   }
 `;
 
-const DetailsContainer = styled.div`
+export const DetailsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   font-size: 14px;
 `;
 
-const Rating = styled.div`
+export const Rating = styled.div`
   padding: 0 10px;
   display: flex;
   gap: 4px;
@@ -91,7 +91,7 @@ const WebsiteLink = styled.a`
   }
 `;
 
-const Release = styled.div`
+export const Release = styled.div`
   padding: 0 15px;
   display: flex;
   gap: 8px;
