@@ -9,7 +9,7 @@ ReactDOM.render(
     <BrowserRouter>
     <Routes>
       <Route path='/' element={<App/>}/>
-      <Route path='/list' element={<List/>}/>
+      <Route path='/saved' element={<List/>}/>
     </Routes>
     </BrowserRouter>
   </React.StrictMode>,

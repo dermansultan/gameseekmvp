@@ -1,4 +1,4 @@
-import { Menu, User } from "react-feather";
+import { Menu, List } from "react-feather";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
@@ -24,8 +24,8 @@ const Nav = () => {
       <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
         <Logo>gameseek</Logo>
       </Link>
-      <Link to="/list" style={{ color: "white" }}>
-        <User />
+      <Link to="/saved" style={{ color: "white" }}>
+        <List />
       </Link>
     </Header>
   );

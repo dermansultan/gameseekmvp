@@ -47,11 +47,14 @@ const RemoveBtn = styled.button`
   color: inherit;
   margin-top: 15px;
 `;
-const ListItem = ({ item }) => {
+const ListItem = ({ item, removeItem }) => {
   const removeFromList = async () => {
     await axios
       .delete("http://localhost:5000/list", { params: { id: item.id } })
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res);
+        removeItem();
+      })
       .catch((err) => console.error(err));
   };
   return (

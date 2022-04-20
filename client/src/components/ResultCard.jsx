@@ -109,7 +109,17 @@ export const Release = styled.div`
 
 const AddGameBtn = styled.button`
   background-color: var(--skyBlue);
-`
+  box-shadow: 0px 0px 3px var(--skyBlue);
+  width: 100%;
+  padding: 2.5px 0;
+  line-height: 179%;
+  font-size: 14px;
+  font-weight: 400;
+  border: none;
+  border-radius: 10px;
+  color: inherit;
+  margin-top: 15px;
+`;
 
 const RemoveBtn = styled.button`
   width: 100%;
@@ -126,37 +136,41 @@ const RemoveBtn = styled.button`
 `;
 
 const ResultCard = ({ apiResult }) => {
-  const [inList, setInList] = useState(null)
+  const [inList, setInList] = useState(null);
 
   useEffect(() => {
     async function getList() {
       await axios.get("http://localhost:5000/list").then((res) => {
         if (res.data.list && res.data.list.includes(`${apiResult.id}`)) {
-          setInList(true)
+          setInList(true);
         } else {
-          setInList(false)
+          setInList(false);
         }
       });
     }
-    getList()
-  }, [apiResult])
+    getList();
+  }, [apiResult]);
 
   const addGame = async () => {
     await axios
-    .post("http://localhost:5000/", null, { params: { id: `${apiResult.id}` } })
-    .then((res) => {
-      console.log(res)
-      setInList(true)
-    })
-    .catch((err) => console.error(err));
-  }
+      .post("http://localhost:5000/", null, {
+        params: { id: `${apiResult.id}` },
+      })
+      .then((res) => {
+        console.log(res);
+        setInList(true);
+      })
+      .catch((err) => console.error(err));
+  };
 
   const removeGame = async () => {
     await axios
-      .delete("http://localhost:5000/list", { params: { id: `${apiResult.id}` } })
+      .delete("http://localhost:5000/list", {
+        params: { id: `${apiResult.id}` },
+      })
       .then((res) => {
-        console.log(res)
-        setInList(false)
+        console.log(res);
+        setInList(false);
       })
       .catch((err) => console.error(err));
   };
@@ -167,7 +181,12 @@ const ResultCard = ({ apiResult }) => {
       </div>
       <ContentCard>
         <h2>{apiResult.name}</h2>
-        {inList !== null && (inList ? <RemoveBtn onClick={removeGame}>remove</RemoveBtn> : <AddGameBtn onClick={addGame}>add</AddGameBtn>)}
+        {inList !== null &&
+          (inList ? (
+            <RemoveBtn onClick={removeGame}>Remove from List</RemoveBtn>
+          ) : (
+            <AddGameBtn onClick={addGame}>Add to List</AddGameBtn>
+          ))}
         <hr></hr>
         <DetailsContainer>
           <Rating>

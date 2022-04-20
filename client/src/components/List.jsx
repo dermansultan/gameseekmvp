@@ -20,7 +20,9 @@ function List() {
           for (const id of res.data.list) {
             const promise = new Promise((resolve, reject) => {
               axios
-                .get(`https://api.rawg.io/api/games/${id}?key=${process.env.REACT_APP_API_KEY}`)
+                .get(
+                  `https://api.rawg.io/api/games/${id}?key=${process.env.REACT_APP_API_KEY}`
+                )
                 .then((response) => resolve(response.data))
                 .catch((err) => reject(err));
             });
@@ -37,10 +39,20 @@ function List() {
   return (
     <div className="App" style={{ width: "90%", margin: "0 auto" }}>
       <Nav />
-      <h1 style={{ fontSize: "24px", marginTop: "60px", marginBottom: "30px" }}>My Game List ({list.length})</h1>
+      <h1 style={{ fontSize: "24px", marginTop: "60px", marginBottom: "30px" }}>
+        My Game List ({list.length})
+      </h1>
       <ListContainer>
         {list.map((item) => {
-          return <ListItem key={item.id} item={item} />;
+          return (
+            <ListItem
+              key={item.id}
+              item={item}
+              removeItem={() =>
+                setList(list.filter((game) => game.id !== item.id))
+              }
+            />
+          );
         })}
       </ListContainer>
     </div>
