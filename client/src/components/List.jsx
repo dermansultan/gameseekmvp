@@ -14,7 +14,7 @@ function List() {
   const [list, setList] = useState([]);
   useEffect(() => {
     async function getList() {
-      await axios.get("http://localhost:5000/list").then((res) => {
+      await axios.get("/list").then((res) => {
         if (res.data.list) {
           const promises = [];
           for (const id of res.data.list) {

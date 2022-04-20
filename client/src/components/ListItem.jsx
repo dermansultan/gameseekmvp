@@ -50,7 +50,7 @@ const RemoveBtn = styled.button`
 const ListItem = ({ item, removeItem }) => {
   const removeFromList = async () => {
     await axios
-      .delete("http://localhost:5000/list", { params: { id: item.id } })
+      .delete("/list", { params: { id: item.id } })
       .then((res) => {
         console.log(res);
         removeItem();

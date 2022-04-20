@@ -140,7 +140,7 @@ const ResultCard = ({ apiResult }) => {
 
   useEffect(() => {
     async function getList() {
-      await axios.get("http://localhost:5000/list").then((res) => {
+      await axios.get("/list").then((res) => {
         if (res.data.list && res.data.list.includes(`${apiResult.id}`)) {
           setInList(true);
         } else {
@@ -153,7 +153,7 @@ const ResultCard = ({ apiResult }) => {
 
   const addGame = async () => {
     await axios
-      .post("http://localhost:5000/", null, {
+      .post("/", null, {
         params: { id: `${apiResult.id}` },
       })
       .then((res) => {
@@ -165,7 +165,7 @@ const ResultCard = ({ apiResult }) => {
 
   const removeGame = async () => {
     await axios
-      .delete("http://localhost:5000/list", {
+      .delete("/list", {
         params: { id: `${apiResult.id}` },
       })
       .then((res) => {
