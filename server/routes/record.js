@@ -29,22 +29,23 @@ recordRoutes.route("/list").get(function (req, res) {
 // This section will help you create a new record.
 recordRoutes.route("/").post(function (req, response) {
   let db_connect = dbo.getDb("gameseek");
-  let myobj = {
-    id: req.body.id,
-  };
-  db_connect.collection("users").insertOne(myobj, function (err, res) {
+  let myquery = { _id: ObjectId( "625b598b71c4d35ad8de841a" )};
+  let newList = { $push: { 'list': req.query.id } }
+  db_connect.collection("users").update(myquery, newList, function (err, res) {
     if (err) throw err;
+    console.log('Game added')
     response.json(res);
   });
 });
 
 // This section will help you delete a record
-recordRoutes.route("/list/:id").delete((req, response) => {
+recordRoutes.route("/list").delete((req, response) => {
   let db_connect = dbo.getDb("gameseek");
-  let myquery = { _id: ObjectId( req.params.id )};
-  db_connect.collection("users").deleteOne(myquery, function (err, obj) {
+  let myquery = { _id: ObjectId( "625b598b71c4d35ad8de841a" )};
+  let newList = { $pull: { 'list': req.query.id } }
+  db_connect.collection("users").update(myquery, newList, function (err, obj) {
     if (err) throw err;
-    console.log("1 document deleted");
+    console.log('Game deleted')
     response.json(obj);
   });
 });

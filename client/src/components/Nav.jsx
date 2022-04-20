@@ -1,5 +1,6 @@
 import { Menu, User } from "react-feather";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Header = styled.header`
   display: flex;
@@ -20,8 +21,12 @@ const Nav = () => {
   return (
     <Header>
       <Menu />
-      <Logo>gameseek</Logo>
-      <User />
+      <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
+        <Logo>gameseek</Logo>
+      </Link>
+      <Link to="/list" style={{ color: "white" }}>
+        <User />
+      </Link>
     </Header>
   );
 };

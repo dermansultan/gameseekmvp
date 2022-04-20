@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { Star, Calendar, ExternalLink } from "react-feather";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const Card = styled.div`
   max-width: 964px;
@@ -54,12 +56,12 @@ const ContentCard = styled.div`
 export const DetailsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 7px;
   font-size: 14px;
 `;
 
 export const Rating = styled.div`
-  padding: 0 10px;
+  padding: 0 8px;
   display: flex;
   gap: 4px;
   height: 25px;
@@ -92,9 +94,9 @@ const WebsiteLink = styled.a`
 `;
 
 export const Release = styled.div`
-  padding: 0 15px;
+  padding: 0 8px;
   display: flex;
-  gap: 8px;
+  gap: 4px;
   height: 25px;
   color: var(--chiefGreen);
   border: 1px solid;
@@ -105,7 +107,59 @@ export const Release = styled.div`
   }
 `;
 
+const AddGameBtn = styled.button`
+  background-color: var(--skyBlue);
+`
+
+const RemoveBtn = styled.button`
+  width: 100%;
+  padding: 2.5px 0;
+  line-height: 179%;
+  font-size: 14px;
+  font-weight: 400;
+  background-color: #f2626b;
+  border: none;
+  box-shadow: 0px 0px 3px #f2626b;
+  border-radius: 10px;
+  color: inherit;
+  margin-top: 15px;
+`;
+
 const ResultCard = ({ apiResult }) => {
+  const [inList, setInList] = useState(null)
+
+  useEffect(() => {
+    async function getList() {
+      await axios.get("http://localhost:5000/list").then((res) => {
+        if (res.data.list && res.data.list.includes(`${apiResult.id}`)) {
+          setInList(true)
+        } else {
+          setInList(false)
+        }
+      });
+    }
+    getList()
+  }, [apiResult])
+
+  const addGame = async () => {
+    await axios
+    .post("http://localhost:5000/", null, { params: { id: `${apiResult.id}` } })
+    .then((res) => {
+      console.log(res)
+      setInList(true)
+    })
+    .catch((err) => console.error(err));
+  }
+
+  const removeGame = async () => {
+    await axios
+      .delete("http://localhost:5000/list", { params: { id: `${apiResult.id}` } })
+      .then((res) => {
+        console.log(res)
+        setInList(false)
+      })
+      .catch((err) => console.error(err));
+  };
   return (
     <Card>
       <div className="imgWrapper">
@@ -113,6 +167,7 @@ const ResultCard = ({ apiResult }) => {
       </div>
       <ContentCard>
         <h2>{apiResult.name}</h2>
+        {inList !== null && (inList ? <RemoveBtn onClick={removeGame}>remove</RemoveBtn> : <AddGameBtn onClick={addGame}>add</AddGameBtn>)}
         <hr></hr>
         <DetailsContainer>
           <Rating>
